@@ -1,44 +1,47 @@
-import React, { useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
+import { Task } from '../interfaces/taskInterface'
 
-interface Task {
-    name: string
-    done: boolean
+interface Props {
+    setTasks: Dispatch<SetStateAction<Task[]>>
+    tasks: Task[]
 }
 
-const Form = (): JSX.Element => {
-    const [newTask, setNewTask] = useState<string>('')
-    const [tasks, setTasks] = useState<Task[]>([]);
+type ChangeEvent = React.ChangeEvent<HTMLInputElement>
+type FormEvent = React.FormEvent<HTMLFormElement>
 
-    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+const Form = ({ setTasks, tasks }: Props) => {
+    const [newTask, setNewTask] = useState<string>('');
+
+    const handleOnChange = (e: ChangeEvent): void => {
         setNewTask(e.target.value);
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = (e: FormEvent): void => {
         e.preventDefault();
-        addTask(newTask)
+        addTask(newTask);
     }
 
     const addTask = (t: string) => {
         const newTasks = [...tasks, { name: t, done: false }]
         setTasks(newTasks);
+        setNewTask('');
     }
 
     return (
-        <>
+        <div>
             <form onSubmit={handleSubmit}>
-                <input type="text" className='bg-slate-300 outline-none rounded p-3 md:w-96 focus-visible:bg-slate-400' autoFocus onChange={handleOnChange} />
+                <input
+                    type="text"
+                    className='bg-slate-300 outline-none rounded p-3 md:w-96 focus-visible:bg-slate-400'
+                    onChange={handleOnChange}
+                    value={newTask}
+                    autoFocus
+                    minLength={3} />
                 <div className='flex justify-center'>
-                    <button className='p-3 md:w-44 bg-sky-300 mt-5 rounded-md hover:bg-sky-400 transition-all duration-300'>Save Task!</button>
-                </div>
-                <div>
-                    {tasks.map((task: Task, i: number) => (
-                        <div key={i}>
-                            <p>{task.name}</p>
-                        </div>
-                    ))}
+                    <button className={`p-3 md:w-2/4 bg-sky-300 mt-5 rounded-md transition-all duration-300 ${!newTask ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-sky-400'}`} disabled={!newTask ? true : false}>Save Task!</button>
                 </div>
             </form>
-        </>
+        </div>
     )
 }
 
