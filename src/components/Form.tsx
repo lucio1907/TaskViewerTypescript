@@ -38,7 +38,12 @@ const Form = ({ setTasks, tasks }: Props) => {
                     autoFocus
                     minLength={3} />
                 <div className='flex justify-center'>
-                    <button className={`p-3 md:w-2/4 bg-sky-300 mt-5 rounded-md transition-all duration-300 ${!newTask ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-sky-400'}`} disabled={!newTask ? true : false}>Save Task!</button>
+                    <button
+                        className={`p-3 md:w-2/4 bg-sky-300 mt-5 rounded-md transition-all duration-300 ${!newTask ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-sky-400'}`}
+                        disabled={!newTask ? true : false}
+                    >
+                        Save Task!
+                    </button>
                 </div>
             </form>
         </div>

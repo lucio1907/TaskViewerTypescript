@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div>
       <Card setTasks={setTasks} tasks={tasks} />
-      <ShowTasks tasks={tasks} />
+      <ShowTasks tasks={tasks} setTasks={setTasks} />
     </div>
   )
 }
