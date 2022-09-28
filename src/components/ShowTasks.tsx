@@ -6,8 +6,6 @@ interface Props {
     setTasks: Dispatch<SetStateAction<Task[]>>
 }
 
-type Event = React.MouseEvent<HTMLButtonElement>
-
 const ShowTasks = ({ tasks, setTasks }: Props) => {
     const [done, setDone] = useState<boolean>(false);
     const checkedTask = (i: number) => {
@@ -22,7 +20,7 @@ const ShowTasks = ({ tasks, setTasks }: Props) => {
         }
     }
 
-    const deleteTask = (id: number, e: Event) => {
+    const deleteTask = (id: number) => {
         const newTask: Task[] = [...tasks];
         newTask.splice(id, 1)
         setTasks(newTask)
@@ -43,7 +41,7 @@ const ShowTasks = ({ tasks, setTasks }: Props) => {
                             >
                                 {tasks[i].done === true ? 'Checked 🗸' : 'Check'}
                             </button>
-                            <button className='bg-red-500 p-2 rounded-md w-24 text-white lg:w-36' onClick={(e) => deleteTask(i, e)}>Delete</button>
+                            <button className='bg-red-500 p-2 rounded-md w-24 text-white lg:w-36' onClick={() => deleteTask(i)}>Delete</button>
                         </div>
                     </div>
                 ))}
